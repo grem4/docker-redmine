@@ -1,27 +1,26 @@
-version: '1.5'
+version: '2'
 
 services:
   postgresql:
-    image: grem4/postgresql:9.5
+    image: grem4/postgresql
     environment:
     - DB_USER=redmine
-    - DB_PASS=secret_password
+    - DB_PASS=password
     - DB_NAME=redmine
     volumes:
     - /srv/docker/redmine/postgresql:/var/lib/postgresql
 
   redmine:
-    image: grem4/redmine:3.3.0
+    image: grem4/redmine
     depends_on:
     - postgresql
     environment:
-    - TZ=Europe/Kyiv
 
     - DB_ADAPTER=postgresql
     - DB_HOST=postgresql
     - DB_PORT=5432
     - DB_USER=redmine
-    - DB_PASS=secret_password
+    - DB_PASS=password
     - DB_NAME=redmine
 
     - REDMINE_PORT=10101
@@ -32,7 +31,7 @@ services:
     - REDMINE_SUDO_MODE_ENABLED=false
     - REDMINE_SUDO_MODE_TIMEOUT=5
 
-    - REDMINE_CONCURRENT_UPLOADS=5
+    - REDMINE_CONCURRENT_UPLOADS=2
 
     - REDMINE_BACKUP_SCHEDULE=
     - REDMINE_BACKUP_EXPIRY=
@@ -44,7 +43,7 @@ services:
     - SMTP_HOST=smtp.gmail.com
     - SMTP_PORT=587
     - SMTP_USER=smtp_user@testmail.com
-    - SMTP_PASS=smtp_secret_password
+    - SMTP_PASS=password
     - SMTP_STARTTLS=true
     - SMTP_AUTHENTICATION=:login
 
@@ -52,7 +51,7 @@ services:
     - IMAP_HOST=imap.gmail.com
     - IMAP_PORT=993
     - IMAP_USER=imap_user@testmail.com
-    - IMAP_PASS=imap_secret_password
+    - IMAP_PASS=password
     - IMAP_SSL=true
     - IMAP_INTERVAL=30
 

@@ -1,4 +1,4 @@
-FROM sameersbn/ubuntu:14.04.20160827
+FROM grem4/ubuntu
 
 ENV REDMINE_VERSION=3.3.0 \
     REDMINE_USER="redmine" \
@@ -11,6 +11,7 @@ ENV REDMINE_INSTALL_DIR="${REDMINE_HOME}/redmine" \
     REDMINE_DATA_DIR="${REDMINE_HOME}/data" \
     REDMINE_BUILD_DIR="${REDMINE_CACHE_DIR}/build" \
     REDMINE_RUNTIME_DIR="${REDMINE_CACHE_DIR}/runtime"
+
 
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E1DD270288B4E6030699E45FA1715D88E1DF1F24 \
  && echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu trusty main" >> /etc/apt/sources.list \
@@ -29,6 +30,8 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E1DD270288B4E6030699E45F
  && update-locale LANG=C.UTF-8 LC_MESSAGES=POSIX \
  && gem install --no-document bundler \
  && rm -rf /var/lib/apt/lists/*
+
+
 
 COPY assets/build/ ${REDMINE_BUILD_DIR}/
 RUN bash ${REDMINE_BUILD_DIR}/install.sh
